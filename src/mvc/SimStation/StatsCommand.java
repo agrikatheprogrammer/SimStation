@@ -16,7 +16,7 @@ public class StatsCommand extends Command {
         JOptionPane.showMessageDialog(
                 null,
                 "# of agents: " + ((Simulation) model).agents.size(),
-                "Number of Agents",
+                "STATISTICS",
                 JOptionPane.INFORMATION_MESSAGE
         );
     }
