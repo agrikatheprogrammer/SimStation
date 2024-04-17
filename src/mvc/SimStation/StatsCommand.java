@@ -13,6 +13,11 @@ public class StatsCommand extends Command {
 
     @Override
     public void execute() throws Exception {
-        JOptionPane.showMessageDialog("# of agents: "+model.agents.size());
+        JOptionPane.showMessageDialog(
+                null,
+                "# of agents: " + ((Simulation) model).agents.size(),
+                "Number of Agents",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 }
