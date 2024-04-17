@@ -1,6 +1,6 @@
 package mvc.SimStation.prisonersDilemma;
 
-import SimStation.*;
+import mvc.SimStation.*;
 import mvc.*;
 
 public class PrisonSimulation extends Simulation {
@@ -29,8 +29,8 @@ public class PrisonSimulation extends Simulation {
         }
 
         public static void main(String[] args) {
-            //AppPanel panel = new SimPanel(new ().PrisonFactory());
-            //panel.display();
+            AppPanel panel = new SimPanel(new PrisonerFactory());
+            panel.display();
         }
 
     }

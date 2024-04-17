@@ -1,6 +1,6 @@
 package mvc.SimStation.prisonersDilemma;
 
-import SimStation.SimFactory;
+import mvc.SimStation.*;
 import mvc.*;
 
 import java.util.ArrayList;

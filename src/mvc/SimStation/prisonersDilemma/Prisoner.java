@@ -4,7 +4,7 @@ package mvc.SimStation.prisonersDilemma;
 // prisoner update: prisoner plays game with random neighbor
 
 import mvc.*;
-import SimStation.Agent;
+import mvc.SimStation.*;
 
 public class Prisoner extends Agent {
     private int fitness = 0;
@@ -12,6 +12,9 @@ public class Prisoner extends Agent {
     private final Strategy strategy;
 
     public Prisoner(Strategy strategy){
+        super();
+        heading = Heading.random();
+
         this.strategy = strategy;
     }
     public boolean cooperate(){
@@ -44,7 +47,7 @@ public class Prisoner extends Agent {
                 opponent.updateFitness(1);
             }
         }
-
+        heading = Heading.random();
         int steps = Utilities.rng.nextInt(10) + 1;
         move(steps); // continue
     }
