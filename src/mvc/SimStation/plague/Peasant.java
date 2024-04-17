@@ -3,6 +3,7 @@ package mvc.SimStation.plague;
 
 import mvc.SimStation.Agent;
 import mvc.SimStation.Heading;
+import mvc.Utilities;
 
 public class Peasant extends Agent {
     public PlagueSim world;
@@ -10,7 +11,9 @@ public class Peasant extends Agent {
     public boolean immune = false;
     @Override
     public void update() {
-        move(5);
+        heading = Heading.random();
+        int steps = Utilities.rng.nextInt(10) + 1;
+        move(steps);
         Peasant p = (Peasant) world.getNeighbor(this, world.RANGE);
         if(p == null) {return;}
         if(!infected&& !immune && p.infected) {
@@ -21,54 +24,44 @@ public class Peasant extends Agent {
             }
         }
     }
-
-    public void run() {
-        myThread = Thread.currentThread();
-        onStart();
-        while (!stopped) {
-            checkSuspended();
-            update();
-        }
-    }
-    public void start(){}
+//    public void start(){}
     public void suspend(){ suspended = true; }
     public void resume(){ notify(); }
     public void stop(){ stopped = true; }
-    public void move(int steps) {
-        heading = Heading.random();
-        int stepsTaken = 0;
-        int xMove = 0;
-        int yMove = 0;
-        switch(heading) {
-            case NORTH: {
-                yMove++;
-                break;
-            }
-            case SOUTH: {
-                yMove--;
-                break;
-            }
-            case EAST: {
-                xMove++;
-                break;
-            }
-            case WEST: {
-                xMove--;
-                break;
-            }
-        }
-        while(stepsTaken < steps) {
-            xc += xMove;
-            yc += yMove;
-            world.changed();
-            stepsTaken++;
-            try {
-                Thread.sleep(20);
-            } catch(InterruptedException e){
-                System.out.println(e);
-            }
-        }
-    }
+//    public void move(int steps) {
+//        int stepsTaken = 0;
+//        int xMove = 0;
+//        int yMove = 0;
+//        switch(heading) {
+//            case NORTH: {
+//                yMove++;
+//                break;
+//            }
+//            case SOUTH: {
+//                yMove--;
+//                break;
+//            }
+//            case EAST: {
+//                xMove++;
+//                break;
+//            }
+//            case WEST: {
+//                xMove--;
+//                break;
+//            }
+//        }
+//        while(stepsTaken < steps) {
+//            xc += xMove;
+//            yc += yMove;
+//            world.changed();
+//            stepsTaken++;
+//            try {
+//                Thread.sleep(20);
+//            } catch(InterruptedException e){
+//                System.out.println(e);
+//            }
+//        }
+//    }
 
     public void onStart() {
         if(d100() <= world.RESISTANCE){

@@ -13,32 +13,17 @@ public class PlagueSim extends Simulation {
     public static int RESISTANCE = 2;
 
     public void populate() {
-        for(int i = 0; i < 50; i++)
-            addAgent(new Peasant());
+        for (int i = 0; i < 50; i++) {
+            Peasant p = new Peasant();
+            p.world = this;
+            addAgent(p);
+        }
     }
     public void start(){
         for(Agent a: agents) {
             a.start();
         }
         clock++;
-    }
-
-    public void suspend(){
-        for(Agent a: agents){
-            a.suspend();
-        }
-    }
-
-    public void resume(){
-        for(Agent a: agents){
-            a.resume();
-        }
-    }
-
-    public void stop(){
-        for(Agent a: agents){
-            a.stop();
-        }
     }
 
     public void changed(){
