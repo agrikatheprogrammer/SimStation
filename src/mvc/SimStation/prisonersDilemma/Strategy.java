@@ -4,7 +4,7 @@ import mvc.*;
 
 public abstract class Strategy {
     //myPrisoner --- strategy
-    protected Prisoner myPrisoner;
+    Prisoner myPrisoner;
     //idk whether to have myPrisoner as a component of Strategy since only Tit4Tat uses it
     /** public Strategy(Prisoner myPrisoner){
         this.myPrisoner = myPrisoner;
@@ -33,8 +33,12 @@ class Cheat extends Strategy{
     }
 }
 class Tit4Tat extends Strategy{
+    /**public Tit4Tat(Prisoner myPrisoner){
+        this.myPrisoner = myPrisoner;;
+    } **/
+
     @Override
     public boolean cooperate(){
-         return myPrisoner.getPartnerHistory();
+         return myPrisoner.partnerCheated;
     }
 }

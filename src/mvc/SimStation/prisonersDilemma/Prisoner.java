@@ -7,8 +7,8 @@ import mvc.*;
 import mvc.SimStation.*;
 
 public class Prisoner extends Agent {
-    private int fitness = 0;
-    private boolean partnerCheated = false;
+    int fitness = 0;
+    boolean partnerCheated = false;
     private final Strategy strategy;
 
     public Prisoner(Strategy strategy){
@@ -21,35 +21,44 @@ public class Prisoner extends Agent {
         return strategy.cooperate();
     }
 
-    public boolean getPartnerHistory(){
-        return this.partnerCheated;
+    public synchronized boolean getPartnerHistory(){
+        return partnerCheated;
+    }
+
+    public Strategy getStrategy(){
+        return this.strategy;
+    }
+    public int getFitness(){
+        return this.fitness;
     }
 
     @Override
     public void update(){
+        heading = Heading.random();
+        int steps = Utilities.rng.nextInt(10) + 1;
+        move(steps); // continue
 
-        Prisoner opponent = (Prisoner) world.getNeighbor(this, 10.0);
+        Prisoner opponent = (Prisoner) world.getNeighbor(this, 10);
 
         if (opponent != null) {
-            boolean prisoner1Coop = this.cooperate();
-            boolean prisoner2Coop = opponent.cooperate();
+            boolean prisoner1Coop = this.getStrategy().cooperate();
+            boolean prisoner2Coop = opponent.getStrategy().cooperate();
             partnerCheated = prisoner2Coop;
 
             if (prisoner1Coop && prisoner2Coop) { // true & true = both cooperate
                 this.updateFitness(3);
                 opponent.updateFitness(3);
             } else if (prisoner1Coop && !prisoner2Coop) { // true & false = opp cheated
+                this.updateFitness(0);
                 opponent.updateFitness(5);
             } else if (!prisoner1Coop && prisoner2Coop) { // false & true = curr cheated
                 this.updateFitness(5);
+                opponent.updateFitness(0);
             } else { // false & false = both cheated
                 this.updateFitness(1);
                 opponent.updateFitness(1);
             }
         }
-        heading = Heading.random();
-        int steps = Utilities.rng.nextInt(10) + 1;
-        move(steps); // continue
     }
 
     public void updateFitness(int amt){
