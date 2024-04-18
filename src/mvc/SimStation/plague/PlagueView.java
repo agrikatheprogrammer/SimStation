@@ -11,14 +11,21 @@ public class PlagueView extends View {
         super(model);
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
+    @Override
+    public void paintComponent(Graphics gc) {
+        super.paintComponent(gc);
+        setBackground(Color.WHITE);
         PlagueSim plague = (PlagueSim) model;
-        for(Agent a: plague.agents){
+        Color oldColor = gc.getColor();
+        for (Agent a : plague.agents) {
             Peasant p = (Peasant) a;
-            if(p.infected){g.setColor(Color.RED);}
-            else {g.setColor(Color.GREEN);}
-            g.fillRect(p.xc, p.yc, 10, 10);
+            if (p.infected)
+                gc.setColor(Color.RED);
+            else
+                gc.setColor(Color.GREEN);
+
+            int r = 10;
+            gc.fillOval(p.xc, p.yc, r, r);
         }
     }
 }
