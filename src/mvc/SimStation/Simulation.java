@@ -13,7 +13,7 @@ public class Simulation extends Model {
     public ArrayList<Agent> agents=new ArrayList<>();
 
         transient private Timer timer; // timers aren't serializable
-        private int clock = 0;
+        public int clock = 0;
 
         private void startTimer() {
             timer = new Timer();
@@ -79,5 +79,7 @@ public class Simulation extends Model {
     public String getStats() {
             return "I am a simulation managing agents!";
     }
-
+    public void tick(){
+        clock++;
+    }
 }

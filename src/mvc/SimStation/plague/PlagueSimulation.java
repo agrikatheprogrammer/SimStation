@@ -5,8 +5,7 @@ import mvc.SimStation.SimPanel;
 import mvc.SimStation.Simulation;
 import mvc.AppPanel;
 
-public class PlagueSim extends Simulation {
-    int clock = 0;
+public class PlagueSimulation extends Simulation {
     private static final int AGENTS = 150;
     public static int INFECTED = 10;
     public static int VIRULENCE = 50;
@@ -62,17 +61,17 @@ public class PlagueSim extends Simulation {
         }
         return agents.get(i);
     }
-    public String[] getStats(){
-        String[] stats = new String[3];
-        stats[0] = "Total population:" + agents.size();
+    public String getStats(){
+        String stats = "Stats:\n";
+        stats += "Total population:" + agents.size() + "\n";
         int infected = 0;
         for(Agent a: agents) {
             Host h = (Host) a;
             if(h.infected) {infected++;}
         }
         infected *= 100;
-        stats[1] = "Percent infected:" + infected/agents.size();
-        stats[2] = "Elapsed time:" + clock;
+        stats += "Percent infected:" + infected/agents.size() + "\n";
+        stats += "Elapsed cycles:" + clock/AGENTS;
         return stats;
     }
 

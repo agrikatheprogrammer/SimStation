@@ -6,15 +6,15 @@ import mvc.SimStation.Heading;
 import mvc.Utilities;
 
 public class Host extends Agent {
-    public PlagueSim world;
+    public PlagueSimulation world;
     public boolean infected = false;
     public boolean immune = false;
-    public boolean running = false;
+//    public boolean running = false;
     public int FRAME_HEIGHT = 400;
     public int FRAME_WIDTH = 400;
 
-    public Host(){
-        if(d100() <= world.RESISTANCE){
+    public Host() {
+        if (d100() <= world.RESISTANCE) {
             immune = true;
         }
         if (!immune && d100() <= world.INFECTED) {
@@ -23,15 +23,17 @@ public class Host extends Agent {
         xc = Utilities.rng.nextInt(10, FRAME_WIDTH - 10);
         yc = Utilities.rng.nextInt(10, FRAME_HEIGHT - 10);
     }
-    public void run() {
-        if(!running) {
-            running = true;
-            while (!stopped) {
-                update();
-                world.notifySubscribers();
-            }
-        }
-    }
+    // optional code to smooth the graphics a little
+//    public void run() {
+//        if(!running) {
+//            running = true;
+//            while (!stopped) {
+//                update();
+//                world.notifySubscribers();
+//                world.tick();
+//            }
+//        }
+//    }
     @Override
     public void update() {
         heading = Heading.random();
@@ -45,13 +47,7 @@ public class Host extends Agent {
             }
         }
     }
-    @Override
-    public void start(){
-        myThread = new Thread(this);
-        myThread.start();
-    }
-    public void suspend(){ suspended = true; }
-    public void stop(){ stopped = true; }
+
     public void move(int steps) {
         for (int i = 0; i < steps; i++) {
             checkSuspended();
@@ -85,8 +81,7 @@ public class Host extends Agent {
     }
 
     private int d100(){
-        int roll = (int) Math.ceil(Math.random() * 100);
-        return roll;
+        return (int) Math.ceil(Math.random() * 100);
     }
 
     private synchronized void checkSuspended() {
