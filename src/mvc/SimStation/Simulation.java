@@ -64,7 +64,7 @@ public class Simulation extends Model {
     }
     public void populate(){}
 
-    public String getStats(){
-            return "# agents = " + agents.size() + "/n clock = " + clock;
+    public String getStats() {
+        return "# agents = " + agents.size() + "/n clock = " + clock;
     }
 }
