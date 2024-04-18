@@ -76,10 +76,16 @@ public abstract class Agent implements Serializable, Runnable {
                 xc--;
             }
             if (yc>380) {
-                yc=10;
+                yc=0;
             }
             if (xc>330) {
-                xc=10;
+                xc=0;
+            }
+            if (xc<0) {
+                xc=330;
+            }
+            if (yc<0){
+                yc=380;
             }
             world.changed(); // Notify the world of the change in position
         }

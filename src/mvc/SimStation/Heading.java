@@ -10,7 +10,8 @@ public enum Heading {
             case (1) -> NORTH;
             case (2) -> EAST;
             case (3) -> SOUTH;
-            default -> WEST;
+            case (4) -> WEST;
+            default -> throw new IllegalStateException("Unexpected value: " + rand);
         };
     }
 
