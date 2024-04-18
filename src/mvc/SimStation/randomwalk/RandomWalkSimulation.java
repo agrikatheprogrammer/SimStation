@@ -28,7 +28,10 @@ class RandomWalkFactory extends SimFactory {
 }
 
 public class RandomWalkSimulation extends Simulation {
-
+    @Override
+    public String getStats() {
+        return "There are "+agents.size()+" drunk people!";
+    }
 
     public void populate() {
         for(int i = 0; i < 15; i++)

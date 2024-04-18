@@ -16,6 +16,7 @@ public abstract class Agent implements Serializable, Runnable {
 
     public Agent() {
      //   this.name = name;
+        heading=Heading.random();
         suspended = false;
         stopped = false;
         myThread = null;
@@ -75,11 +76,17 @@ public abstract class Agent implements Serializable, Runnable {
             } else {
                 xc--;
             }
-            if (yc>380||yc<0) {
+            if (yc>380) {
                 yc=0;
             }
-            if (xc>330||xc<0) {
+            if (xc>330) {
                 xc=0;
+            }
+            if (xc<0) {
+                xc=330;
+            }
+            if (yc<0){
+                yc=380;
             }
             world.changed(); // Notify the world of the change in position
         }

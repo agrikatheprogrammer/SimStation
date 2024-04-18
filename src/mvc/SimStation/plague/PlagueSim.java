@@ -61,7 +61,7 @@ public class PlagueSim extends Simulation {
             if(count >= agents.size()) { return null; }
         }
         return agents.get(i);
-    }
+    }  //currently implemented in Agent.
     public String[] getStats(){
         String[] stats = new String[3];
         stats[0] = "Total population:" + agents.size();
