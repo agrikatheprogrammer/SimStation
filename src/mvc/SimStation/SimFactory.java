@@ -21,10 +21,7 @@ public class SimFactory implements AppFactory {
     }
 
     public String[] getHelp() {
-        ArrayList<String> help = new ArrayList<>();
-        help.add("help!");
-        String[] helpArray = (String[]) help.toArray();
-        return helpArray;
+        return new String[]{"help!"};
     }
 
     public String about(){
