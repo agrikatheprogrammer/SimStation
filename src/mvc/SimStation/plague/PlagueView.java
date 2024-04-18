@@ -1,18 +1,14 @@
 package mvc.SimStation.plague;
 
-import mvc.SimStation.Agent;
 import mvc.Model;
+import mvc.SimStation.Agent;
 import mvc.SimStation.Simulation;
 import mvc.View;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
 
 public class PlagueView extends View {
-    public static int PREFERRED_SIZE = 500;
     public PlagueView(Model model) {
         super(model);
         }
@@ -40,31 +36,37 @@ public class PlagueView extends View {
                 // Scale the coordinates
                 int scaledX = (int) (x * xScale);
                 int scaledY = (int) (y * yScale);
-                Peasant p = (Peasant) agent;
+                Host p = (Host) agent;
                 if (p.infected)
-                g.setColor(Color.RED);
+                    g.setColor(Color.RED);
                 else
-                g.setColor(Color.GREEN);
+                    g.setColor(Color.GREEN);
                 // Draw a filled oval representing the agent
                 g2d.fillOval(scaledX, scaledY, 10, 10);
             }
         }
-//    @Override
-//    public void paintComponent(Graphics gc) {
-//        setPreferredSize(new Dimension(500,500));
-//        super.paintComponent(gc);
-//        setBackground(Color.WHITE);
-//        PlagueSim plague = (PlagueSim) model;
-//        Color oldColor = gc.getColor();
-//        for (Agent a : plague.agents) {
-//            Peasant p = (Peasant) a;
-//            if (p.infected)
-//                gc.setColor(Color.RED);
-//            else
-//                gc.setColor(Color.GREEN);
-//                p.FRAME_HEIGHT = getVisibleRect().height;
-//                p.FRAME_WIDTH = getVisibleRect().width;
-//            int r = 10;
-//            gc.fillOval(p.xc, p.yc, r, r);
-        }
+/*
+    This alternate view method will automatically scale the "playable area"
+    in which agents can move to the current window size. Neat! But not exactly
+    the functionality that the project calls for.
+
+    @Override
+    public void paintComponent(Graphics gc) {
+        setPreferredSize(new Dimension(500,500));
+        super.paintComponent(gc);
+        setBackground(Color.WHITE);
+        PlagueSim plague = (PlagueSim) model;
+        Color oldColor = gc.getColor();
+        for (Agent a : plague.agents) {
+            Peasant p = (Peasant) a;
+            if (p.infected)
+                gc.setColor(Color.RED);
+            else
+                gc.setColor(Color.GREEN);
+                p.FRAME_HEIGHT = getVisibleRect().height;
+                p.FRAME_WIDTH = getVisibleRect().width;
+            int r = 10;
+            gc.fillOval(p.xc, p.yc, r, r);
+*/
+}
 

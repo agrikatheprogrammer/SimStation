@@ -5,7 +5,7 @@ import mvc.SimStation.Agent;
 import mvc.SimStation.Heading;
 import mvc.Utilities;
 
-public class Peasant extends Agent {
+public class Host extends Agent {
     public PlagueSim world;
     public boolean infected = false;
     public boolean immune = false;
@@ -13,7 +13,7 @@ public class Peasant extends Agent {
     public int FRAME_HEIGHT = 400;
     public int FRAME_WIDTH = 400;
 
-    public Peasant(){
+    public Host(){
         if(d100() <= world.RESISTANCE){
             immune = true;
         }
@@ -37,7 +37,7 @@ public class Peasant extends Agent {
         heading = Heading.random();
         int steps = Utilities.rng.nextInt(20) + 1;
         move(steps);
-        Peasant p = (Peasant) world.getNeighbor(this, world.RANGE);
+        Host p = (Host) world.getNeighbor(this, world.RANGE);
         if(p == null) {return;}
         if(!immune && p.infected) {
             if (d100() <= world.VIRULENCE) {

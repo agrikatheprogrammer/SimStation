@@ -14,33 +14,37 @@ public class PlagueSim extends Simulation {
     public static int RESISTANCE = 2;
 
 
-//    private boolean stopped = false;
+
 
     public void populate() {
         for (int i = 0; i < AGENTS; i++) {
-            Peasant p = new Peasant();
+            Host p = new Host();
             p.world = this;
             addAgent(p);
         }
     }
-    public void start(){
-//        if(stopped){
-//            populate();
-//            stopped = false;
-//        }
-        for(Agent a: agents) {
-            a.start();
-        }
-        clock++;
-    }
+    //This code makes "Stop" clear the simulation and allows "Start" to create a fresh one
+    // if the simulation has been stopped.
 
-    public void stop(){
-        for (Agent agent:agents) {
-            agent.stop();
-        }
-//        agents.clear();
-//        stopped = true;
-    }
+//    private boolean stopped = false;
+//    public void start(){
+////        if(stopped){
+////            populate();
+////            stopped = false;
+////        }
+//        for(Agent a: agents) {
+//            a.start();
+//        }
+//        clock++;
+//    }
+
+//    public void stop(){
+//        for (Agent agent:agents) {
+//            agent.stop();
+//        }
+////        agents.clear();
+////        stopped = true;
+//    }
 
     public Agent getNeighbor(Agent a, Double radius){
         boolean found = false;
@@ -60,9 +64,10 @@ public class PlagueSim extends Simulation {
     }
 
 
-    public void changed(){
-        notifySubscribers();
-    }
+//    public void changed(){
+//        setUnsavedChanges(true);
+//        notifySubscribers();
+//    }
         public static void main(String[] args) {
             AppPanel panel = new SimPanel(new PlagueFactory());
             panel.display();
