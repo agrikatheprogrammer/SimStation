@@ -6,7 +6,7 @@ import mvc.View;
 
 public class PlagueFactory extends SimFactory {
     public Model makeModel() {
-        return new PlagueSim();
+        return new PlagueSimulation();
     }
 
     public View makeView(Model model) {
