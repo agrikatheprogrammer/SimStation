@@ -7,24 +7,58 @@ import mvc.AppPanel;
 
 public class PlagueSim extends Simulation {
     int clock = 0;
+    private static int AGENTS = 150;
     public static int INFECTED = 10;
     public static int VIRULENCE = 50;
     public static double RANGE = 10.0;
     public static int RESISTANCE = 2;
 
+
+//    private boolean stopped = false;
+
     public void populate() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < AGENTS; i++) {
             Peasant p = new Peasant();
             p.world = this;
             addAgent(p);
         }
     }
     public void start(){
+//        if(stopped){
+//            populate();
+//            stopped = false;
+//        }
         for(Agent a: agents) {
             a.start();
         }
         clock++;
     }
+
+    public void stop(){
+        for (Agent agent:agents) {
+            agent.stop();
+        }
+//        agents.clear();
+//        stopped = true;
+    }
+
+    public Agent getNeighbor(Agent a, Double radius){
+        boolean found = false;
+        int i = (int) Math.floor(Math.random() * agents.size());
+        int count = 0;
+        while(!found) {
+            i++;
+            count++;
+            if(i >= agents.size()) {i = 0;}
+            int xDiff = a.xc - agents.get(i).xc;
+            int yDiff = a.yc - agents.get(i).yc;
+            double rad = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+            if(rad <= radius && !a.equals(agents.get(i))){ found = true; }
+            if(count >= agents.size()) { return null; }
+        }
+        return agents.get(i);
+    }
+
 
     public void changed(){
         notifySubscribers();

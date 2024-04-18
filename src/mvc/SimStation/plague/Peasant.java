@@ -9,66 +9,78 @@ public class Peasant extends Agent {
     public PlagueSim world;
     public boolean infected = false;
     public boolean immune = false;
-    @Override
-    public void update() {
-        heading = Heading.random();
-        int steps = Utilities.rng.nextInt(10) + 1;
-        move(steps);
-        Peasant p = (Peasant) world.getNeighbor(this, world.RANGE);
-        if(p == null) {return;}
-        if(!infected&& !immune && p.infected) {
-            if (d100() <= world.VIRULENCE) {
-                if(d100() >= world.RESISTANCE){
-                    infected = true;
-                }
-            }
-        }
-    }
-//    public void start(){}
-    public void suspend(){ suspended = true; }
-    public void resume(){ notify(); }
-    public void stop(){ stopped = true; }
-//    public void move(int steps) {
-//        int stepsTaken = 0;
-//        int xMove = 0;
-//        int yMove = 0;
-//        switch(heading) {
-//            case NORTH: {
-//                yMove++;
-//                break;
-//            }
-//            case SOUTH: {
-//                yMove--;
-//                break;
-//            }
-//            case EAST: {
-//                xMove++;
-//                break;
-//            }
-//            case WEST: {
-//                xMove--;
-//                break;
-//            }
-//        }
-//        while(stepsTaken < steps) {
-//            xc += xMove;
-//            yc += yMove;
-//            world.changed();
-//            stepsTaken++;
-//            try {
-//                Thread.sleep(20);
-//            } catch(InterruptedException e){
-//                System.out.println(e);
-//            }
-//        }
-//    }
+    public boolean running = false;
+    public int FRAME_HEIGHT = 400;
+    public int FRAME_WIDTH = 400;
 
-    public void onStart() {
+    public Peasant(){
         if(d100() <= world.RESISTANCE){
             immune = true;
         }
         if (!immune && d100() <= world.INFECTED) {
             infected = true;
+        }
+        xc = Utilities.rng.nextInt(10, FRAME_WIDTH - 10);
+        yc = Utilities.rng.nextInt(10, FRAME_HEIGHT - 10);
+    }
+    public void run() {
+        if(!running) {
+            running = true;
+            while (!stopped) {
+                update();
+                world.notifySubscribers();
+            }
+        }
+    }
+    @Override
+    public void update() {
+        heading = Heading.random();
+        int steps = Utilities.rng.nextInt(20) + 1;
+        move(steps);
+        Peasant p = (Peasant) world.getNeighbor(this, world.RANGE);
+        if(p == null) {return;}
+        if(!immune && p.infected) {
+            if (d100() <= world.VIRULENCE) {
+                infected = true;
+            }
+        }
+    }
+    @Override
+    public void start(){
+        myThread = new Thread(this);
+        myThread.start();
+    }
+    public void suspend(){ suspended = true; }
+    public void stop(){ stopped = true; }
+    public void move(int steps) {
+        for (int i = 0; i < steps; i++) {
+            checkSuspended();
+            switch(heading) {
+                case NORTH: {
+                    yc++;
+                    break;
+                }
+                case SOUTH: {
+                    yc--;
+                    break;
+                }
+                case EAST: {
+                    xc++;
+                    break;
+                }
+                case WEST: {
+                    xc--;
+                    break;
+                }
+            }
+            yc = Math.floorMod(yc, FRAME_HEIGHT);
+            xc = Math.floorMod(xc, FRAME_WIDTH);
+            world.changed(); // Notify the world of the change in position
+            try{
+                Thread.sleep(20);
+            } catch(InterruptedException e) {
+                System.out.println(e);
+            }
         }
     }
 
@@ -76,6 +88,7 @@ public class Peasant extends Agent {
         int roll = (int) Math.ceil(Math.random() * 100);
         return roll;
     }
+
     private synchronized void checkSuspended() {
         try {
             while(!stopped && suspended) {
