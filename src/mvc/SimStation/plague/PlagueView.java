@@ -2,13 +2,14 @@ package mvc.SimStation.plague;
 
 import mvc.Model;
 import mvc.SimStation.Agent;
+import mvc.SimStation.SimView;
 import mvc.SimStation.Simulation;
 import mvc.View;
 
 import java.awt.*;
 import java.util.List;
 
-public class PlagueView extends View {
+public class PlagueView extends SimView {
     public PlagueView(Model model) {
         super(model);
         }
