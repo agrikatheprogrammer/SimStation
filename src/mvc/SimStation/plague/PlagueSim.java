@@ -46,7 +46,7 @@ public class PlagueSim extends Simulation {
 ////        stopped = true;
 //    }
 
-   /* public Agent getNeighbor(Agent a, Double radius){
+    public Agent getNeighbor(Agent a, Double radius){
         boolean found = false;
         int i = (int) Math.floor(Math.random() * agents.size());
         int count = 0;
@@ -61,7 +61,7 @@ public class PlagueSim extends Simulation {
             if(count >= agents.size()) { return null; }
         }
         return agents.get(i);
-    } */ //currently implemented in Agent.
+    }  //currently implemented in Agent.
     public String[] getStats(){
         String[] stats = new String[3];
         stats[0] = "Total population:" + agents.size();
