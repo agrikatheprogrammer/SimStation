@@ -7,28 +7,75 @@ import mvc.AppPanel;
 
 public class PlagueSim extends Simulation {
     int clock = 0;
+    private static final int AGENTS = 150;
     public static int INFECTED = 10;
     public static int VIRULENCE = 50;
     public static double RANGE = 10.0;
     public static int RESISTANCE = 2;
 
+
+
+
     public void populate() {
-        for (int i = 0; i < 50; i++) {
-            Peasant p = new Peasant();
+        for (int i = 0; i < AGENTS; i++) {
+            Host p = new Host();
             p.world = this;
             addAgent(p);
         }
     }
-    public void start(){
-        for(Agent a: agents) {
-            a.start();
+    //This code makes "Stop" clear the simulation and allows "Start" to create a fresh one
+    // if the simulation has been stopped.
+
+//    private boolean stopped = false;
+//    public void start(){
+////        if(stopped){
+////            populate();
+////            stopped = false;
+////        }
+//        for(Agent a: agents) {
+//            a.start();
+//        }
+//        clock++;
+//    }
+
+//    public void stop(){
+//        for (Agent agent:agents) {
+//            agent.stop();
+//        }
+////        agents.clear();
+////        stopped = true;
+//    }
+
+    public Agent getNeighbor(Agent a, Double radius){
+        boolean found = false;
+        int i = (int) Math.floor(Math.random() * agents.size());
+        int count = 0;
+        while(!found) {
+            i++;
+            count++;
+            if(i >= agents.size()) {i = 0;}
+            int xDiff = a.xc - agents.get(i).xc;
+            int yDiff = a.yc - agents.get(i).yc;
+            double rad = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+            if(rad <= radius && !a.equals(agents.get(i))){ found = true; }
+            if(count >= agents.size()) { return null; }
         }
-        clock++;
+        return agents.get(i);
+    }
+    public String[] getStats(){
+        String[] stats = new String[3];
+        stats[0] = "Total population:" + agents.size();
+        int infected = 0;
+        for(Agent a: agents) {
+            Host h = (Host) a;
+            if(h.infected) {infected++;}
+        }
+        infected *= 100;
+        stats[1] = "Percent infected:" + infected/agents.size();
+        stats[2] = "Elapsed time:" + clock;
+        return stats;
     }
 
-    public void changed(){
-        notifySubscribers();
-    }
         public static void main(String[] args) {
             AppPanel panel = new SimPanel(new PlagueFactory());
             panel.display();
