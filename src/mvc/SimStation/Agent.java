@@ -16,6 +16,7 @@ public abstract class Agent implements Serializable, Runnable {
 
     public Agent() {
      //   this.name = name;
+        heading=Heading.random();
         suspended = false;
         stopped = false;
         myThread = null;
