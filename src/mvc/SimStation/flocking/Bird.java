@@ -8,7 +8,7 @@ public class Bird extends Agent {
 
   public Bird() {
     super();
-    speed=Utilities.rng.nextInt(20)+1;
+    speed=Utilities.rng.nextInt(5)+1;
   }
 
   public void update(){
