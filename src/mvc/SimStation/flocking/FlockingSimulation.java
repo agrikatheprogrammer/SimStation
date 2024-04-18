@@ -5,7 +5,7 @@ import mvc.Model;
 import mvc.SimStation.SimFactory;
 import mvc.SimStation.SimPanel;
 import mvc.SimStation.Simulation;
-
+import mvc.SimStation.Agent;
 
 class FlockingFactory extends SimFactory {
     public Model makeModel() { return new FlockingSimulation(); }
