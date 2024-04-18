@@ -7,7 +7,7 @@ import mvc.AppPanel;
 
 public class PlagueSim extends Simulation {
     int clock = 0;
-    private static int AGENTS = 150;
+    private static final int AGENTS = 150;
     public static int INFECTED = 10;
     public static int VIRULENCE = 50;
     public static double RANGE = 10.0;
@@ -62,12 +62,20 @@ public class PlagueSim extends Simulation {
         }
         return agents.get(i);
     }
+    public String[] getStats(){
+        String[] stats = new String[3];
+        stats[0] = "Total population:" + agents.size();
+        int infected = 0;
+        for(Agent a: agents) {
+            Host h = (Host) a;
+            if(h.infected) {infected++;}
+        }
+        infected *= 100;
+        stats[1] = "Percent infected:" + infected/agents.size();
+        stats[2] = "Elapsed time:" + clock;
+        return stats;
+    }
 
-
-//    public void changed(){
-//        setUnsavedChanges(true);
-//        notifySubscribers();
-//    }
         public static void main(String[] args) {
             AppPanel panel = new SimPanel(new PlagueFactory());
             panel.display();
