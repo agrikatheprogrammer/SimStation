@@ -4,11 +4,9 @@ import mvc.SimStation.SimFactory;
 import mvc.Model;
 import mvc.View;
 
-import java.util.ArrayList;
-
 public class PlagueFactory extends SimFactory {
     public Model makeModel() {
-        return new Plague();
+        return new PlagueSim();
     }
 
     public View makeView(Model model) {
@@ -20,9 +18,13 @@ public class PlagueFactory extends SimFactory {
     }
 
     public String[] getHelp() {
-        ArrayList<String> help = new ArrayList<>();
-        help.add("help!"); //TODO
-        String[] helpArray = (String[]) help.toArray();
-        return helpArray;
+        String[] help = new String[6];
+        help[0] = "Plague Simulator! Simulates a plague spreading throughout a population through close contact.";
+        help[1] = "Start - begins the simulation";
+        help[2] = "Suspend - pauses the simulation";
+        help[3] = "Resume - continues a suspended simulation";
+        help[4] = "Stop - permanently ends the current simulation, restart the app or load a saved simulation to start again.";
+        help[5] = "Stats - displays the number of agents, the current percentage infected, and the elapsed time.";
+        return help;
     }
 }
