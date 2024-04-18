@@ -10,7 +10,20 @@ import mvc.SimStation.Agent;
 class FlockingFactory extends SimFactory {
     public Model makeModel() { return new FlockingSimulation(); }
     public String getTitle() { return "Flocking Birds";}
-
+    @Override
+    public String[] getHelp() {
+        ArrayList<String> help = new ArrayList<>();
+        help.add("Populate - creates birdss that fly their own way until they meet and flock together!");
+        help.add("Suspend - suspends the movement of the birds temporarily");
+        help.add("Resume - resumes the flocking of the birds");
+        help.add("Stop - permanently stop the flocking of the birds");
+        help.add("Stats - displayed birds at each of their speeds from 1-5");
+        String[] result=new String[5];
+        for (int i=0;i<5;i++){
+            result[i]=help.get(i);
+        }
+        return result;
+    }
 
 
 }
